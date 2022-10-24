@@ -70,16 +70,16 @@
 ## общее количество стран
 SELECT
 
-	count(*)
+     count(*)
 
 FROM
 
-	public_freedom.index_2022;
+     public_freedom.index_2022;
  
-     output:
+          output:
 
-               count
-               184
+                    count
+                    184
 
 
 ## страны, для которых рейтинг отсутствует
@@ -98,28 +98,58 @@ WHERE
 
 	 score_2022 IS NULL;
 
+          
           output:
 
-               country_id	country_name	score_2022
+                    country_id	country_name	score_2022
 
-               1	Afghanistan	NULL
-               77	Iraq	NULL
-               96	Libya	NULL
-               97	Liechtenstein	NULL
-               184	Somalia	NULL
-               159	Syria	NULL
-               181	Yemen	NULL
+                    1	Afghanistan	NULL
+                    77	Iraq	NULL
+                    96	Libya	NULL
+                    97	Liechtenstein	NULL
+                    184	Somalia	NULL
+                    159	Syria	NULL
+                    181	Yemen	NULL
+
+### то есть для 177 стран Индекс экономической свободы 2022 рассчитан
+## пятерка стран с самым высоким рейтингом
+
+SELECT
+
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+
+FROM
+
+	public_freedom.index_2022
+
+ORDER BY
+
+	world_rank
+
+LIMIT 5;
+
+               output:
+
+                    world_rank	country_id	country_name	score_2022
+                         1	147	Singapore	84.4
+                         2	158	Switzerland	84.2
+                         3	78	Ireland	82
+                         4	120	New Zealand	80.6
+                         5	99	Luxembourg	80.6
 
 
 
 
 
 
-     \select segment, count(sales) 
-     FROM public.orders
-     group by segment;\
 
-     segment    |count|
-     Consumer   | 5191|
-     Corporate  | 3020|
-     Home Office| 1783|
+
+|world_rank|country_id|country_name|score_2022|
+|1|147|Singapore|84.4|
+|2|158|Switzerland|84.2|
+|3|78|Ireland|82|
+|4|120|New Zealand|80.6|
+|5|99|Luxembourg|80.6|
