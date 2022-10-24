@@ -67,9 +67,42 @@
 32	public_debt_% of_gdp	NUMERIC(3, 1)	государственный долг в % от ВВП
 
 
+## общее количество стран
+SELECT 
+	count(*)
+FROM
+	index_2022;
+ 
+     output:
 
-# Monthly Sales by Segment (Ежемесячные продажи по сегментам)
-## общие продажи по сегментам
+               count
+               184
+
+
+## страны, для которых рейтинг отсутствует
+
+SELECT 
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+FROM
+	index_2022
+WHERE 
+	 score_2022 IS NULL;
+
+output:
+
+world_rank	country_id	country_name	score_2022
+NULL	1	Afghanistan	NULL
+NULL	77	Iraq	NULL
+NULL	96	Libya	NULL
+NULL	97	Liechtenstein	NULL
+NULL	184	Somalia	NULL
+NULL	159	Syria	NULL
+NULL	181	Yemen	NULL
+
+
 
      \select segment, count(sales) 
      FROM public.orders
