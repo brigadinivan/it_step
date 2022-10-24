@@ -68,10 +68,10 @@
 
 
 ## общее количество стран
-SELECT 
+\SELECT 
 	count(*)
 FROM
-	index_2022;
+	index_2022;\
  
      output:
 
@@ -81,7 +81,7 @@ FROM
 
 ## страны, для которых рейтинг отсутствует
 
-SELECT 
+\SELECT 
 	world_rank,
 	country_id,
 	country_name,
@@ -89,18 +89,18 @@ SELECT
 FROM
 	index_2022
 WHERE 
-	 score_2022 IS NULL;
+	 score_2022 IS NULL;\
 
-output:
+     output:
 
-world_rank	country_id	country_name	score_2022
-NULL	1	Afghanistan	NULL
-NULL	77	Iraq	NULL
-NULL	96	Libya	NULL
-NULL	97	Liechtenstein	NULL
-NULL	184	Somalia	NULL
-NULL	159	Syria	NULL
-NULL	181	Yemen	NULL
+          world_rank	|country_id|	|country_name|	|score_2022|
+          NULL	               1	          Afghanistan 	NULL
+          NULL	               77	          Iraq      	NULL
+          NULL	               96	          Libya	     NULL
+          NULL	               97	          Liechtenstein	NULL
+          NULL	               184	          Somalia	     NULL
+          NULL           	159	          Syria	     NULL
+          NULL	               181	          Yemen	     NULL
 
 
 
