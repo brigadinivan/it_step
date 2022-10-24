@@ -68,10 +68,13 @@
 
 
 ## общее количество стран
-\SELECT 
+SELECT
+
 	count(*)
+
 FROM
-	index_2022;\
+
+	public_freedom.index_2022;
  
      output:
 
@@ -81,12 +84,15 @@ FROM
 
 ## страны, для которых рейтинг отсутствует
 
-SELECT 
+SELECT
+
 	country_id,
 	country_name,
 	score_2022
+
 FROM
 	public_freedom.index_2022
+     
 WHERE 
 	 score_2022 IS NULL;
 
