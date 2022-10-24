@@ -99,8 +99,9 @@ WHERE
 	 score_2022 IS NULL;
 
      output:
+     
           country_id	country_name	score_2022
-          
+
           1	Afghanistan	NULL
           77	Iraq	NULL
           96	Libya	NULL
