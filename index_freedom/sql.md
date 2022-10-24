@@ -81,15 +81,20 @@ FROM
 
 ## страны, для которых рейтинг отсутствует
 
-\SELECT 
-	world_rank,
+SELECT 
 	country_id,
 	country_name,
 	score_2022
 FROM
-	index_2022
+	public_freedom.index_2022
 WHERE 
-	 score_2022 IS NULL;\
+	 score_2022 IS NULL;
+
+
+output:
+     
+     image.png
+
 
      output:
 
