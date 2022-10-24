@@ -90,22 +90,18 @@ FROM
 WHERE 
 	 score_2022 IS NULL;
 
-
-output:
-     
-     image.png
-
-
      output:
+          country_id	country_name	score_2022
+          1	Afghanistan	NULL
+          77	Iraq	NULL
+          96	Libya	NULL
+          97	Liechtenstein	NULL
+          184	Somalia	NULL
+          159	Syria	NULL
+          181	Yemen	NULL
 
-          world_rank	|country_id|	|country_name|	|score_2022|
-          NULL	               1	          Afghanistan 	NULL
-          NULL	               77	          Iraq      	NULL
-          NULL	               96	          Libya	     NULL
-          NULL	               97	          Liechtenstein	NULL
-          NULL	               184	          Somalia	     NULL
-          NULL           	159	          Syria	     NULL
-          NULL	               181	          Yemen	     NULL
+
+
 
 
 
