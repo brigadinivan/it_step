@@ -141,15 +141,3 @@ LIMIT 5;
                          5	99	Luxembourg	80.6
 
 
-
-
-
-
-
-
-|world_rank|country_id|country_name|score_2022|
-|1|147|Singapore|84.4|
-|2|158|Switzerland|84.2|
-|3|78|Ireland|82|
-|4|120|New Zealand|80.6|
-|5|99|Luxembourg|80.6|
