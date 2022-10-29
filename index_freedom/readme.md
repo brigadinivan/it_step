@@ -10,9 +10,9 @@
 
 Первоначальные данные предварительно отформатировал, проверил правильность расчета индекса, загрузил в SQL браузер (pgAdmin) для анализа.
 
-ссылка на страницу с sql 
+ссылка на страницу с [sql](https://github.com/brigadinivan/it_step/blob/main/index_freedom/sql.txt) 
 
-результаты анализа набора данных легли в основу *[дашборда](https://github.com/brigadinivan/it_step/blob/main/index_freedom/index_dashboard.png)
+результаты анализа набора данных легли в основу [дашборда](https://github.com/brigadinivan/it_step/blob/main/index_freedom/index_dashboard.png)
 
 
-папка с данными и блокнотом *[jupyter](https://github.com/brigadinivan/it_step/tree/main/index_freedom/jupyter)
+папка с данными и блокнотом [jupyter](https://github.com/brigadinivan/it_step/tree/main/index_freedom/jupyter)
