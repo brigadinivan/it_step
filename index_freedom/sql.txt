@@ -1,0 +1,884 @@
+В данной таблице представлена подробная информация о странах, для которых рассчитывался Индекс:
+
+	Название столбца	Тип переменной	Информация
+1	country_id	INT	идентификатор страны
+2	country_name	TEXT	название страны
+3	region	TEXT	название региона
+4	world_rank	INT	мировой рейтинг
+5	region_rank	INT	рейтинг в регионе
+6	score_2022	NUMERIC(3, 1)	баллы в 2022 году
+7	property_rights	NUMERIC(4, 1)	право собственности
+8	judical_effectiveness	NUMERIC(3, 1)	эффективность судебной системы
+9	government_integrity	NUMERIC(3, 1)	честность правительства
+10	tax_burden	NUMERIC(4, 1)	налоговая нагрузка
+11	gov_spending	NUMERIC(3, 1)	государственные расходы
+12	fiscal_health	NUMERIC(3, 1)	финансовое благополучие
+13	business_freedom	NUMERIC(3, 1)	свобода бизнеса
+14	labor_freedom	NUMERIC(3, 1)	свобода труда
+15	monetary_freedom	NUMERIC(3, 1)	денежная свобода
+16	trade_freedom	NUMERIC(3, 1)	свобода торговли
+17	investment_freedom	INT	свобода инвестиций
+18	financial_freedom	INT	финансовая свобода
+19	tariff_rate	NUMERIC(3, 1)	ставка налога на импортные товары, %
+20	income_tax_rate	NUMERIC(4, 1)	ставка подоходного налога -процент, который вы должны уплатить, исходя из вашего дохода, %
+21	corporate_tax_rate	NUMERIC(3, 1)	корпоративный налог — это налог на прибыль организации, %
+22	tax_burden_%_of_gdp	NUMERIC(3, 1)	общие налоговые поступления в процентах от ВВП
+23	gov_expenditure_of_gdp	NUMERIC(4, 1)	государственные расходы в процентах от ВВП 
+24	population_millions	NUMERIC(7, 3)	население, млн
+25	gdp_billions_ppp	NUMERIC(6, 1)	валовой внутренний продукт (ВВП) – общий объем производства товаров и услуг с учетом покупательной способности, млрд
+26	gdp_growth_rate	NUMERIC(3, 1)	темпы роста ВВП, %
+27	gdp_growth_rate_5_year	NUMERIC(3, 1)	среднегодовой рост ВВП за пять лет
+28	gdp_per_capita_ppp	NUMERIC(7, 1)	ВВП на душу населения (с поправкой на ППС), разделенный на численность населения, $
+29	unemployment	NUMERIC(3, 1)	уровень безработицы, %
+30	inflation	NUMERIC(6, 2)	инфляция – годовое процентное изменение цен, %
+31	fdi_inflow_millions	INT	приток прямых иностранных инвестиций (ППИ), млн $
+32	public_debt_% of_gdp	NUMERIC(3, 1)	государственный долг в % от ВВП 
+
+ВВП (валовой внутренний продукт), GDP (gross domestic product) - это денежная мера рыночной стоимости всех конечных товаров и услуг, произведенных и проданных (не перепроданных) странами за определенный период времени. Он рассчитывается путем деления ВВП на соответствующий паритет покупательной способности (ППС), который представляет собой обменный курс, устраняющий разницу в уровне цен между странами.
+
+tax_burden_%_of_gdp - общие налоговые поступления в процентах от ВВП показывают долю продукции страны, которая собирается государством в виде налогов. Его можно рассматривать как один из показателей степени, в которой правительство контролирует ресурсы экономики.
+
+Валовой внутренний продукт (ВВП) — это денежная мера рыночной стоимости всех конечных товаров и услуг, произведенных и проданных (не перепроданных) странами за определенный период времени, млрд
+
+Инфляция – это скорость роста цен за определенный период времени.
+
+ВВП на душу населения рассчитывается по паритету покупательной способности (ППС). 
+
+Отношение долга к ВВП — это показатель, сравнивающий государственный долг страны с ее валовым внутренним продуктом (ВВП). При сравнении того, что страна должна, с тем, что она производит, отношение долга к ВВП надежно указывает на способность этой конкретной страны погасить свои долги.
+
+Общее количество стран
+
+SELECT 
+	count(*)
+FROM
+	index_2022;
+
+count
+184
+
+
+Страны, для которых Индекс отсутствует
+
+SELECT 
+	country_id,
+	country_name,
+	score_2022
+FROM
+	public_freedom.index_2022
+WHERE 
+	 score_2022 IS NULL;
+
+country_id	country_name	score_2022
+1	Afghanistan	NULL
+77	Iraq	NULL
+96	Libya	NULL
+97	Liechtenstein	NULL
+184	Somalia	NULL
+159	Syria	NULL
+181	Yemen	NULL
+
+
+Количество стран, для которых Индекс отсутствует
+
+SELECT 
+	COUNT (*)
+FROM
+	index_2022
+WHERE 
+	 score_2022 IS NOT NULL;
+
+
+count
+177
+
+Пятерка стран с самым высоким рейтингом
+
+SELECT 
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+FROM
+	public_freedom.index_2022
+ORDER BY
+	world_rank
+LIMIT 5;
+
+world_rank	country_id	country_name	score_2022
+1	147	Singapore	84.4
+2	158	Switzerland	84.2
+3	78	Ireland	82
+4	120	New Zealand	80.6
+5	99	Luxembourg	80.6
+
+
+Пятерка стран с худшим мировым рейтингом
+
+SELECT 
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+FROM
+	public_freedom.index_2022
+ORDER BY
+	score_2022
+LIMIT 5;
+
+
+world_rank	country_id	country_name	score_2022
+177	87	Korea, North 	3
+176	179	Venezuela	24.8
+175	42	Cuba	29.5
+174	154	Sudan	32
+173	183	Zimbabwe	33.1
+
+
+Позиция Беларуси в рейтинге
+
+SELECT 
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+FROM
+	public_freedom.index_2022
+WHERE 
+	country_name = 'Belarus';
+
+world_rank	country_id	country_name	score_2022
+135	14	Belarus	53
+
+
+
+Вывод 5-ки рейтинга стран исключая первые 5 стран
+
+SELECT 
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+FROM
+	index_2022
+ORDER BY
+	world_rank
+OFFSET 5
+LIMIT 5;
+
+world_rank	country_id	country_name	score_2022
+6	160	Taiwan 	80.1
+7	54	Estonia	80
+8	119	Netherlands	79.5
+9	57	Finland	78.3
+10	45	Denmark	78
+
+
+Вывести значения рейтинга с 27 по 29 
+
+SELECT 
+	world_rank,
+	country_id,
+	country_name,
+	score_2022
+FROM
+	index_2022
+ORDER BY
+	world_rank
+OFFSET 26
+LIMIT 3;
+
+
+world_rank	country_id	country_name	score_2022
+27	107	Malta	71.5
+28	13	Barbados	71.3
+29	23	Bulgaria	71
+
+
+
+
+
+Вывод уникальных значений «регионов»
+
+SELECT 
+	DISTINCT region
+FROM
+	public_freedom.index_2022;
+
+
+region
+Sub-Saharan Africa
+Europe
+Asia-Pacific
+Americas
+Middle East and North Africa
+
+
+
+Операторы сравнения
+
+SELECT 
+	country_name,
+	world_rank,
+	world_rank >= 50 AS "rank_>_50"
+FROM 
+	index_2022
+LIMIT 5;
+
+country_name	world_rank	rank_>_50
+Afghanistan	NULL	NULL
+Albania	50	TRUE
+Algeria	167	TRUE
+Angola	139	TRUE
+Argentina	144	TRUE
+
+оценка экономической свободы Economic Freedom Scores 
+Free ● 80–100 свободный
+Mostly Free ●70–79.9 в основном свободный
+Moderately Free● 60–69.9 умеренно свободный
+Mostly Unfree ●50–59.9 в основном несвободный
+Repressed ● 0–49.9 подавленный, репрессированный
+● Not Graded 
+
+
+Category free
+
+SELECT 
+	country_name,
+	world_rank,
+	score_2022,
+	'free' AS "category"
+FROM 
+	public_freedom.index_2022
+WHERE
+	score_2022 >= 80
+ORDER BY
+	world_rank;
+
+
+country_name	world_rank	score_2022	category
+Singapore	1	84.4	free
+Switzerland	2	84.2	free
+Ireland	3	82	free
+New Zealand	4	80.6	free
+Luxembourg	5	80.6	free
+Taiwan 	6	80.1	free
+Estonia	7	80	free
+
+
+SELECT 
+	COUNT(*)
+FROM 
+	public_freedom.index_2022
+WHERE
+	score_2022 >= 80;
+
+
+count
+7
+
+
+
+
+
+
+SELECT 
+	country_name,
+	world_rank,
+	score_2022,
+	'mostly_free' AS "category"
+FROM 
+	index_2022
+WHERE
+	score_2022 >= 70
+	AND
+	score_2022 < 80
+ORDER BY
+	world_rank;
+
+
+country_name	world_rank	score_2022	category
+Netherlands	8	79.5	mostly_free
+Finland	9	78.3	mostly_free
+Denmark	10	78	mostly_free
+Sweden	11	77.9	mostly_free
+Australia	12	77.7	mostly_free
+Iceland	13	77	mostly_free
+Norway	14	76.9	mostly_free
+Canada	15	76.6	mostly_free
+Germany	16	76.1	mostly_free
+Lithuania	17	75.8	mostly_free
+Latvia	18	74.8	mostly_free
+Korea, South	19	74.6	mostly_free
+Chile	20	74.4	mostly_free
+Czech Republic	21	74.4	mostly_free
+Austria	22	73.8	mostly_free
+Cyprus	23	72.9	mostly_free
+United Kingdom	24	72.7	mostly_free
+United States	25	72.1	mostly_free
+Georgia	26	71.8	mostly_free
+Malta	27	71.5	mostly_free
+Barbados	28	71.3	mostly_free
+Bulgaria	29	71	mostly_free
+Mauritius	30	70.9	mostly_free
+Portugal	31	70.8	mostly_free
+Slovenia	32	70.5	mostly_free
+United Arab Emirates	33	70.2	mostly_free
+Uruguay	34	70	mostly_free
+
+SELECT 
+	COUNT(*)
+FROM 
+	index_2022
+WHERE
+	score_2022 >= 70
+	AND
+	score_2022 < 80;
+
+count
+27
+
+
+SELECT 
+	country_name,
+	world_rank,
+	score_2022,
+	'moderately_free' AS "category"
+FROM 
+	index_2022
+WHERE
+	score_2022 >= 60
+	AND
+	score_2022 < 70
+ORDER BY
+	world_rank;
+
+country_name	world_rank	score_2022	category
+Japan	35	69.9	moderately_free
+Slovakia	36	69.7	moderately_free
+Belgium	37	69.6	moderately_free
+Bahamas	38	68.7	moderately_free
+Poland	39	68.7	moderately_free
+Samoa	40	68.3	moderately_free
+Spain	41	68.2	moderately_free
+Malaysia	42	68.1	moderately_free
+Israel	43	68	moderately_free
+Qatar	44	67.7	moderately_free
+Croatia	45	67.6	moderately_free
+Jamaica	46	67.4	moderately_free
+Romania	47	67.1	moderately_free
+Hungary	48	66.9	moderately_free
+Cabo Verde	49	66.7	moderately_free
+Albania	50	66.6	moderately_free
+Peru	51	66.5	moderately_free
+France	52	65.9	moderately_free
+North Macedonia	53	65.7	moderately_free
+Saint Vincent and the Grenadines	54	65.7	moderately_free
+Costa Rica	55	65.4	moderately_free
+Panama	56	65.4	moderately_free
+Italy	57	65.4	moderately_free
+Armenia	58	65.3	moderately_free
+Serbia	59	65.2	moderately_free
+Colombia	60	65.1	moderately_free
+Botswana	61	64.8	moderately_free
+Brunei Darussalam	62	64.8	moderately_free
+Indonesia	63	64.4	moderately_free
+Kazakhstan	64	64.4	moderately_free
+Saint Lucia	65	64.3	moderately_free
+Mongolia	66	63.9	moderately_free
+Mexico	67	63.7	moderately_free
+Bosnia and Herzegovina	68	63.4	moderately_free
+Guatemala	69	63.2	moderately_free
+Thailand	70	63.2	moderately_free
+Dominican Republic	71	63	moderately_free
+Vanuatu	72	62.9	moderately_free
+Paraguay	73	62.9	moderately_free
+Bahrain	74	62	moderately_free
+Azerbaijan	75	61.6	moderately_free
+Cote d'Ivoire	76	61.6	moderately_free
+Greece	77	61.5	moderately_free
+Moldova	78	61.3	moderately_free
+Seychelles	79	61.1	moderately_free
+Philippines	80	61.1	moderately_free
+Benin	81	61	moderately_free
+Micronesia	82	61	moderately_free
+Tonga	83	60.8	moderately_free
+Vietnam	84	60.6	moderately_free
+Sao Tome and Principe	85	60.3	moderately_free
+Kosovo	86	60.1	moderately_free
+Jordan	87	60.1	moderately_free
+Senegal	88	60	moderately_free
+
+
+54 rows
+
+
+SELECT 
+	country_name,
+	world_rank,
+	score_2022,
+	'mostly_unfree' AS "category"
+FROM 
+	index_2022
+WHERE
+	score_2022 >= 50
+	AND
+	score_2022 < 60
+ORDER BY
+	world_rank;
+
+country_name	world_rank	score_2022	category
+Ghana	89	59.8	mostly_unfree
+El Salvador	90	59.6	mostly_unfree
+Guyana	91	59.5	mostly_unfree
+Honduras	92	59.5	mostly_unfree
+Tanzania	93	59.5	mostly_unfree
+Bhutan	94	59.3	mostly_unfree
+Namibia	95	59.2	mostly_unfree
+Kiribati	96	59.2	mostly_unfree
+Morocco	97	59.2	mostly_unfree
+Madagascar	98	58.9	mostly_unfree
+Trinidad and Tobago	99	58.8	mostly_unfree
+Burkina Faso	100	58.3	mostly_unfree
+Kuwait	101	58.3	mostly_unfree
+Gambia	102	58	mostly_unfree
+Montenegro	103	57.8	mostly_unfree
+Togo	104	57.2	mostly_unfree
+Rwanda	105	57.1	mostly_unfree
+Cambodia	106	57.1	mostly_unfree
+Turkey	107	56.9	mostly_unfree
+Oman	108	56.6	mostly_unfree
+Belize	109	56.6	mostly_unfree
+Solomon Islands	110	56.5	mostly_unfree
+Fiji	111	56.4	mostly_unfree
+South Africa	112	56.2	mostly_unfree
+Russia	113	56.1	mostly_unfree
+Mali	114	55.9	mostly_unfree
+Gabon	115	55.8	mostly_unfree
+Kyrgyz Republic	116	55.8	mostly_unfree
+Uzbekistan	117	55.7	mostly_unfree
+Saudi Arabia	118	55.5	mostly_unfree
+Mauritania	119	55.3	mostly_unfree
+Djibouti	120	55.3	mostly_unfree
+Niger	121	54.9	mostly_unfree
+Nicaragua	122	54.8	mostly_unfree
+Papua New Guinea	123	54.6	mostly_unfree
+Nigeria	124	54.4	mostly_unfree
+Dominica	125	54.4	mostly_unfree
+Ecuador	126	54.3	mostly_unfree
+Uganda	127	54.2	mostly_unfree
+Tunisia	128	54.2	mostly_unfree
+Guinea	129	54.2	mostly_unfree
+Ukraine	130	54.1	mostly_unfree
+India	131	53.9	mostly_unfree
+Sri Lanka	132	53.3	mostly_unfree
+Brazil	133	53.3	mostly_unfree
+Malawi	134	53	mostly_unfree
+Belarus	135	53	mostly_unfree
+Cameroon	136	52.9	mostly_unfree
+Bangladesh	137	52.7	mostly_unfree
+Kenya	138	52.6	mostly_unfree
+Angola	139	52.6	mostly_unfree
+Sierra Leone	140	52	mostly_unfree
+Eswatini	141	51.4	mostly_unfree
+Mozambique	142	51.3	mostly_unfree
+Comoros	143	50.4	mostly_unfree
+Argentina	144	50.1	mostly_unfree
+Haiti	145	50	mostly_unfree
+
+57 rows
+
+SELECT 
+	country_name,
+	world_rank,
+	score_2022,
+	'repressed' AS "category"
+FROM 
+	index_2022
+WHERE
+	score_2022 < 50
+ORDER BY
+	world_rank;
+
+
+country_name	world_rank	score_2022	category
+Chad	146	49.8	repressed
+Tajikistan	147	49.7	repressed
+Nepal	148	49.7	repressed
+Burma	149	49.6	repressed
+Ethiopia	150	49.6	repressed
+Laos	151	49.2	repressed
+Egypt	152	49.1	repressed
+Pakistan	153	48.8	repressed
+Zambia	154	48.7	repressed
+Congo, Republic of	155	48.5	repressed
+Suriname	156	48.1	repressed
+Lesotho	157	48.1	repressed
+China	158	48	repressed
+Liberia	159	47.9	repressed
+Congo, Democratic Republic of the Congo	160	47.6	repressed
+Maldives	161	47.3	repressed
+Lebanon	162	47.3	repressed
+Equatorial Guinea	163	47.2	repressed
+Timor-Leste	164	46.3	repressed
+Turkmenistan	165	46.2	repressed
+Guinea-Bissau	166	46	repressed
+Algeria	167	45.8	repressed
+Central African Republic	168	45.7	repressed
+Bolivia	169	43	repressed
+Iran	170	42.4	repressed
+Eritrea	171	39.7	repressed
+Burundi	172	39.4	repressed
+Zimbabwe	173	33.1	repressed
+Sudan	174	32	repressed
+Cuba	175	29.5	repressed
+Venezuela	176	24.8	repressed
+Korea, North 	177	3	repressed
+
+32 rows
+
+SELECT 
+	country_name,
+	world_rank,
+	'not_grated' AS "category"
+FROM 
+	index_2022
+WHERE
+	score_2022 IS NULL
+ORDER BY
+	world_rank;
+
+country_name	world_rank	category
+Afghanistan	NULL	not_grated
+Iraq	NULL	not_grated
+Libya	NULL	not_grated
+Liechtenstein	NULL	not_grated
+Somalia	NULL	not_grated
+Syria	NULL	not_grated
+Yemen	NULL	not_grated
+
+
+7 rows
+
+
+Средний индекс за 2022 год
+
+SELECT 
+	ROUND(AVG(score_2022),1) AS avg_index_2022
+FROM 
+  index_2022;
+
+avg_index_2022
+60.0
+
+
+Количество стран по регионам
+SELECT 
+	region,
+	COUNT(*)
+FROM 
+  public_freedom.index_2022
+GROUP BY
+	region;
+
+region,"count"
+Sub-Saharan Africa,48
+Europe,46	
+Asia-Pacific,40
+Americas,32
+Middle East and North Africa,18
+
+
+Количество стран и населения, млрд по регионам
+
+SELECT 
+	region,
+	COUNT(country_name) AS country_amount,
+	ROUND(SUM(population_millions)/1000, 3) AS population_bill
+FROM 
+  public_freedom.index_2022
+GROUP BY
+	region
+ORDER BY
+ 3 DESC;
+
+
+region,"country_amount","population_bill"
+Asia-Pacific,40,4.275
+Sub-Saharan Africa,48,1.126
+Americas,32,1.016
+Europe,46,0.848
+Middle East and North Africa,18,0.458
+
+
+
+
+
+
+
+
+
+Сортировка по категориям индекса
+
+
+SELECT
+	count(country_name),
+	CASE
+	WHEN score_2022 >= 80 THEN 'free'
+	WHEN score_2022 < 80 AND score_2022 >= 70 THEN 'mostly_free'
+	WHEN score_2022 < 70 AND score_2022 >= 60 THEN 'moderately_free'
+	WHEN score_2022 < 60 AND score_2022 >= 50 THEN 'mostly_unfree'
+	WHEN score_2022 < 50 THEN 'repressed'
+	WHEN score_2022 IS NULL THEN 'not_grated'
+	END AS rating 
+FROM 
+  public_freedom.index_2022
+GROUP BY
+	2
+ORDER BY
+	1 DESC;
+
+
+count	rating
+57	mostly_unfree
+54	moderately_free
+32	repressed
+27	mostly_free
+7	not_grated
+7	free
+
+
+SELECT
+	country_name,
+	score_2022,
+	'mostly_unfree' AS "category"
+FROM 
+  public_freedom.index_2022
+WHERE country_name = 'Belarus';
+
+
+
+country_name	score_2022	category
+Belarus	53	mostly_unfree
+
+
+
+
+
+Топ 10 стран по количеству населения
+
+
+SELECT
+	region,
+	country_name,
+	population_millions
+FROM 
+  public_freedom.index_2022
+ORDER BY
+	population_millions DESC
+limit 10;
+
+
+region	country_name	population_millions
+Asia-Pacific	China	1402.112
+Asia-Pacific	India	1380.004
+Americas	United States	329.484
+Asia-Pacific	Indonesia	273.524
+Asia-Pacific	Pakistan	220.892
+Americas	Brazil	212.559
+Sub-Saharan Africa	Nigeria	206.14
+Asia-Pacific	Bangladesh	164.689
+Europe	Russia	144.104
+Americas	Mexico	128.933
+
+
+Топ 10 стран по ВВП
+
+SELECT
+	country_name,
+	population_millions,
+	gdp_billions_ppp
+FROM 
+	public_freedom.index_2022
+WHERE
+	gdp_billions_ppp IS NOT NULL
+ORDER BY
+	gdp_billions_ppp DESC
+limit 10;
+
+
+
+country_name,"population_millions","gdp_billions_ppp"
+China,1402.112,24142.8
+United States,329.484,20932.8
+India,1380.004,8907.1
+Japan,125.836,5313.0
+Germany,83.241,4496.8
+Russia,144.104,4096.5
+Indonesia,273.524,3302.4
+Brazil,212.559,3153.6
+France,67.392,2999.7
+United Kingdom,67.215,2959.9
+
+Сортировка по категориям индекса и ВВП на душу населения
+
+SELECT
+	ROUND(AVG(gdp_per_capita_ppp),1) AS avg_gdp_per_capita,
+	CASE
+	WHEN score_2022 >= 80 THEN 'free'
+	WHEN score_2022 < 80 AND score_2022 >= 70 THEN 'mostly_free'
+	WHEN score_2022 < 70 AND score_2022 >= 60 THEN 'moderately_free'
+	WHEN score_2022 < 60 AND score_2022 >= 50 THEN 'mostly_unfree'
+	WHEN score_2022 < 50 THEN 'repressed'
+	WHEN score_2022 IS NULL THEN 'not_grated'
+	END AS rating 
+FROM 
+  public_freedom.index_2022
+GROUP BY
+	2
+ORDER BY
+	1 DESC;
+
+avg_gdp_per_capita	rating
+73972.9	free
+42518.7	mostly_free
+21803.1	moderately_free
+9916.8	mostly_unfree
+6873.8	repressed
+3019.7	not_grated
+
+
+
+
+
+Разбивка всех стран по численным категориям
+SELECT
+	country_name,
+	CASE
+	WHEN score_2022 >= 80 THEN 1
+	WHEN score_2022 < 80 AND score_2022 >= 70 THEN 2
+	WHEN score_2022 < 70 AND score_2022 >= 60 THEN 3
+	WHEN score_2022 < 60 AND score_2022 >= 50 THEN 4
+	WHEN score_2022 < 50 THEN 5
+	WHEN score_2022 IS NULL THEN 6
+	END AS rating 
+FROM 
+  public.index_2022;
+
+
+ средний индекс ЕПИ в зависимости от категории страны
+SELECT
+	ROUND(AVG(epi_2022),1) AS avg_epi,
+	CASE
+	WHEN index_2022 >= 80 THEN 'free'
+	WHEN index_2022 < 80 AND index_2022 >= 70 THEN 'mostly_free'
+	WHEN index_2022 < 70 AND index_2022 >= 60 THEN 'moderately_free'
+	WHEN index_2022 < 60 AND index_2022 >= 50 THEN 'mostly_unfree'
+	WHEN index_2022 < 50 THEN 'repressed'
+	END AS rating 
+FROM 
+  public_freedom.epi
+GROUP BY
+	2
+ORDER BY
+	1 DESC;
+
+avg_epi	rating
+58.6	free
+58.5	mostly_free
+44.8	moderately_free
+36.8	mostly_unfree
+35.6	repressed
+
+
+Пятерка стран с минимальным подоходным налогом с населения
+
+SELECT 
+	country_name,
+	income_tax_rate
+FROM
+	public_freedom.index_2022
+where income_tax_rate != 0
+ORDER BY
+	income_tax_rate ASC
+LIMIT 7;
+
+country_name	income_tax_rate
+Saudi Arabia	2.5
+Liechtenstein	7
+Guatemala	7
+Montenegro	9
+Bulgaria	10
+Bosnia and Herzegovina	10
+Kazakhstan	10
+
+Пятерка с максимальным подоходным налогом
+
+
+SELECT 
+	country_name,
+	income_tax_rate
+FROM
+	public_freedom.index_2022
+where income_tax_rate != 0
+ORDER BY
+	income_tax_rate DESC
+LIMIT 5;
+
+country_name	income_tax_rate
+Chad	60
+Sweden	57
+Denmark	56
+Austria	55
+Netherlands	52
+
+Пятерка стран с минимальным налогом с корпораций
+
+SELECT 
+	country_name,
+	corporate_tax_rate
+FROM
+	public_freedom.index_2022
+where corporate_tax_rate != 0
+ORDER BY
+	corporate_tax_rate
+LIMIT 5;
+
+country_name	corporate_tax_rate
+Saudi Arabia	2.5
+Barbados	5.5
+Uzbekistan	7.5
+Hungary	9
+Montenegro	9
+
+Пятерка стран с максимальным налогом с корпораций
+
+SELECT 
+	country_name,
+	corporate_tax_rate
+FROM
+	public_freedom.index_2022
+where corporate_tax_rate != 0
+ORDER BY
+	corporate_tax_rate DESC
+LIMIT 5;
+
+country_name	corporate_tax_rate
+Comoros	50
+Chad	45
+Guyana	40
+Suriname	36
+Equatorial Guinea	35
+
+Беларусь
+ 
+SELECT 
+	country_name,
+	income_tax_rate,
+	corporate_tax_rate
+FROM
+	public_freedom.index_2022
+where country_name = 'Belarus';
+
+country_name	income_tax_rate	corporate_tax_rate
+Belarus	13	18
+

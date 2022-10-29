@@ -12,6 +12,7 @@
 
 ссылка на страницу с sql 
 
-результаты анализа набора данных легли в основу дашбоарда
+результаты анализа набора данных легли в основу *[дашборда](https://github.com/brigadinivan/it_step/blob/main/index_freedom/index_dashboard.png)
 
-папка с данными и блокнотом jupyter
+
+папка с данными и блокнотом *[jupyter](https://github.com/brigadinivan/it_step/tree/main/index_freedom/jupyter)
